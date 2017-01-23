@@ -1,0 +1,17 @@
+{
+  "name": "Cheerful",
+  "version": "1.0.0",
+  "description": "App to cheer you UP!",
+  "main": "script.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Yandri-Sanchez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "nodemon": "^1.9.2"
+  },
+  "devDependencies": {
+  }
+}
