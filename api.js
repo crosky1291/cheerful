@@ -1,9 +1,7 @@
 var api = {
-  queue: [],
-  displaying: [0,1,2],
-  getYoutubeData: function(data) {
-
-    var that = this;
+  queue: [], //will hold the video id's
+  displaying: [0,1,2], //these three items are used as indexes for displaying from the queue.
+  getYoutubeData: function(data) { //gets data from youtube
     var request = gapi.client.youtube.search.list({
       part: 'snippet',
       type: 'video',
@@ -20,7 +18,7 @@ var api = {
     
     return promise;
   },
-  getVideoIds: function(youTubeObj) {
+  getVideoIds: function(youTubeObj) { //extract video id's
     var ids = [];
 
     youTubeObj.result.items.forEach(function(item) {
@@ -33,7 +31,7 @@ var api = {
   addToQueue: function(videoIds) {
     this.queue = this.queue.concat(videoIds);
   },
-  makeIframes: function(videoIds) {
+  makeIframes: function(videoIds) { //makes the html iframes and returns them
     var iFrames = [];
 
     var iFrame = ['<iframe width="0%" height="100%" src="', '" frameborder="0" allowfullscreen></iframe>'];
@@ -45,8 +43,8 @@ var api = {
 
     return iFrames;
   },
-  displayVideos: function(videoIndexes) {
-    var ids = [ this.queue[videoIndexes[0]], this.queue[videoIndexes[1]], this.queue[videoIndexes[2]] ];
+  displayVideos: function() { //display the videos 
+    var ids = [ this.queue[this.displaying[0]], this.queue[this.displaying[1]], this.queue[this.displaying[2]] ];
     var iFrames = this.makeIframes(ids);
 
 
@@ -62,7 +60,7 @@ var api = {
       }, 600);
     });
   },
-  shuffle: function shuffle(arr) {
+  shuffle: function shuffle(arr) { //randomized the videos
     var currentIndex = arr.length, temp, randomIndex;
 
     while (currentIndex > 0) { // While there are elements in the array
@@ -100,12 +98,9 @@ var api = {
     $(".video iframe").animate({
       width: 0,
       opacity: 0.4
-    }, 500).promise().then(function() {
+    }, 500).promise().then(function() { //after the animation remove the video and display the new ones.
       $('.video').remove()
       that.displayVideos(that.displaying);
     });
   }
 };
-
-
-console.log(api);
